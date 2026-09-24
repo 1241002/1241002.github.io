@@ -1,0 +1,71 @@
+---
+import {
+  assetPath,
+  localePath,
+  otherLocale,
+  switchLocalePath,
+  useTranslations,
+  type Locale,
+} from "@/i18n/ui";
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const target = otherLocale(lang);
+const tTarget = useTranslations(target);
+const projectsHref = localePath(lang, "projects/");
+const isProjects = Astro.url.pathname.startsWith(projectsHref);
+const linkClass =
+  "no-underline hover:text-signal-ink hover:underline aria-[current=page]:underline aria-[current=page]:decoration-2";
+---
+
+<header class="border-b-2 border-ink">
+  <div class="grid-page items-baseline py-4 text-meta font-medium uppercase">
+    <a
+      href={localePath(lang)}
+      class="col-span-1 font-bold no-underline hover:text-signal-ink sm:col-span-2"
+      aria-label={`Alexandre Costa — ${t("nav.home")}`}
+    >
+      AC
+    </a>
+    <nav
+      aria-label={t("nav.main")}
+      class="col-span-3 sm:col-span-4 lg:col-span-10"
+    >
+      <ul class="flex justify-end gap-5 sm:gap-8">
+        <li>
+          <a
+            href={projectsHref}
+            class={linkClass}
+            aria-current={isProjects ? "page" : undefined}
+          >
+            {t("nav.projects")}
+          </a>
+        </li>
+        <li>
+          <a
+            href={assetPath("cv/cv-alexandre-costa.pdf")}
+            class={linkClass}
+            download
+          >
+            {t("nav.cv")}
+          </a>
+        </li>
+        <li>
+          <a
+            href={switchLocalePath(Astro.url.pathname, target)}
+            hreflang={target}
+            lang={target}
+            class={linkClass}
+            aria-label={tTarget("lang.switch")}
+          >
+            {target.toUpperCase()}
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header>

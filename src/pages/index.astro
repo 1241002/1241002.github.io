@@ -1,16 +1,23 @@
 ---
+// GitHub Pages cannot negotiate language: `/` always sends visitors to PT.
+import { localePath, defaultLocale } from "@/i18n/ui";
+
+const target = localePath(defaultLocale);
 ---
 
-<html lang="en">
+<!doctype html>
+<html lang="pt">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="icon" href="/favicon.ico" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="generator" content={Astro.generator} />
-    <title>Astro</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Alexandre Costa</title>
+    <meta http-equiv="refresh" content={`0; url=${target}`} />
+    <link rel="canonical" href={new URL(target, Astro.site).href} />
+    <meta name="robots" content="noindex" />
   </head>
   <body>
-    <h1>Astro</h1>
+    <p>
+      <a href={target}>Alexandre Costa — portfólio</a>
+    </p>
   </body>
 </html>

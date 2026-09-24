@@ -1,0 +1,49 @@
+---
+import { useTranslations, type Locale } from "@/i18n/ui";
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const year = new Date().getFullYear();
+const contacts = [
+  {
+    label: "alexandremccosta@gmail.com",
+    href: "mailto:alexandremccosta@gmail.com",
+  },
+  { label: "LinkedIn", href: "https://www.linkedin.com/in/alexandremccosta/" },
+  { label: "GitHub", href: "https://github.com/1241002" },
+];
+---
+
+<footer class="mt-section border-t-2 border-ink">
+  <div class="grid-page gap-y-4 py-8 text-meta">
+    <p class="col-span-full font-bold uppercase lg:col-span-3">
+      Alexandre Costa
+    </p>
+    <ul
+      class="col-span-full flex flex-wrap gap-x-6 gap-y-2 lg:col-span-7"
+      aria-label={t("footer.contact")}
+    >
+      {contacts.map((c) => (
+        <li>
+          <a
+            href={c.href}
+            class="underline hover:text-signal-ink"
+            rel={c.href.startsWith("http") ? "me noopener" : undefined}
+          >
+            {c.label}
+          </a>
+        </li>
+      ))}
+    </ul>
+    <p class="col-span-full text-muted tabular-nums lg:col-span-2 lg:text-right">
+      © {year} ·{" "}
+      <a href="#" class="text-muted underline hover:text-signal-ink">
+        {t("footer.top")}
+      </a>
+    </p>
+  </div>
+</footer>

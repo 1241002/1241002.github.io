@@ -1,0 +1,53 @@
+---
+// One 404 for the whole site (GitHub Pages serves a single 404.html): bilingual.
+import "@/styles/global.css";
+import { localePath } from "@/i18n/ui";
+---
+
+<!doctype html>
+<html lang="pt">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>404 — Alexandre Costa</title>
+    <meta name="robots" content="noindex" />
+  </head>
+  <body class="flex min-h-dvh flex-col">
+    <header class="border-b-2 border-ink">
+      <div class="grid-page py-4 text-meta font-bold uppercase">
+        <a href={localePath("pt")} class="no-underline hover:text-signal-ink">
+          AC
+        </a>
+      </div>
+    </header>
+    <main class="grid-page flex-1 content-start gap-y-8 pt-8">
+      <h1 class="text-display-fit col-span-full">
+        404
+        <span class="text-signal" aria-hidden="true">
+          .
+        </span>
+      </h1>
+      <div class="col-span-full sm:col-span-3 lg:col-span-5">
+        <p class="stretch-h2 text-h2">Esta página não existe.</p>
+        <a
+          href={localePath("pt")}
+          class="mt-4 inline-block underline hover:text-signal-ink"
+        >
+          Voltar ao início
+        </a>
+      </div>
+      <div
+        class="col-span-full sm:col-span-3 lg:col-span-5 lg:col-start-7"
+        lang="en"
+      >
+        <p class="stretch-h2 text-h2">This page doesn’t exist.</p>
+        <a
+          href={localePath("en")}
+          class="mt-4 inline-block underline hover:text-signal-ink"
+        >
+          Back to the home page
+        </a>
+      </div>
+    </main>
+  </body>
+</html>

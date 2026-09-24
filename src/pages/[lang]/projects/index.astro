@@ -1,0 +1,18 @@
+---
+// Placeholder archive (slice 1). The filterable archive is built in slice 4.
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { getStaticLocalePaths, isLocale, useTranslations } from "@/i18n/ui";
+
+export const getStaticPaths = getStaticLocalePaths;
+
+const { lang } = Astro.params;
+if (!isLocale(lang)) throw new Error(`Unknown locale: ${lang}`);
+const t = useTranslations(lang);
+---
+
+<BaseLayout lang={lang} title={t("projects.title")}>
+  <section class="grid-page gap-y-6 pt-12">
+    <h1 class="stretch-h1 col-span-full text-h1">{t("projects.title")}</h1>
+    <p class="col-span-full text-muted">{t("projects.soon")}</p>
+  </section>
+</BaseLayout>

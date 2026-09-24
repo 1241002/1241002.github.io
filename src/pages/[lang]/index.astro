@@ -1,0 +1,40 @@
+---
+// Placeholder home (slice 1). The recruiter home is built in slice 5.
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import {
+  assetPath,
+  getStaticLocalePaths,
+  isLocale,
+  useTranslations,
+} from "@/i18n/ui";
+
+export const getStaticPaths = getStaticLocalePaths;
+
+const { lang } = Astro.params;
+if (!isLocale(lang)) throw new Error(`Unknown locale: ${lang}`);
+const t = useTranslations(lang);
+---
+
+<BaseLayout lang={lang}>
+  <section class="grid-page pt-8">
+    <h1 class="text-display-fit col-span-full uppercase">
+      Alexandre Costa
+      <span class="text-signal" aria-hidden="true">
+        .
+      </span>
+    </h1>
+  </section>
+  <section class="grid-page mt-12 gap-y-6 border-t border-ink pt-8">
+    <div class="col-span-full sm:col-span-4 lg:col-span-6">
+      <p class="stretch-h2 text-h2">{t("home.tagline")}</p>
+      <p class="mt-4 text-muted">{t("home.meta")}</p>
+      <a
+        href={assetPath("cv/cv-alexandre-costa.pdf")}
+        download
+        class="mt-8 inline-block bg-ink px-6 py-3 text-paper no-underline transition-colors hover:bg-signal hover:text-ink"
+      >
+        {t("cv.download")}
+      </a>
+    </div>
+  </section>
+</BaseLayout>

@@ -26,3 +26,5 @@ pnpm-debug.log*
 # design review captures / tool output
 .impeccable/review/
 .playwright-mcp/
+test-results/
+playwright-report/
