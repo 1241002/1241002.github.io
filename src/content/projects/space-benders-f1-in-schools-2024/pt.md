@@ -6,7 +6,6 @@ areas: [communication]
 context: personal
 tech: [Vídeo, Redes sociais, Gestão de marca]
 cover: ./cover.jpg
-featured: 4
 coverAlt: Os cinco membros da equipa Space Benders, de polo preto com os logótipos F1 in Schools e da Junta de Freguesia de Ermesinde, atrás da mesa da equipa com o portfólio oficial.
 ---
 

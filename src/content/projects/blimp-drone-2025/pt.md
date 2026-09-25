@@ -7,6 +7,7 @@ context: isep
 course: LENG2
 tech: [Arduino, Bluetooth (HC-05), Servo, Sensor ultrassónico, Tinkercad]
 cover: ./cover.jpg
+featured: 4
 coverAlt: "O protótipo do dirigível numa secretária junto à janela: base de esferovite com Arduino, driver de motores e cablagem, e duas hélices num eixo por baixo."
 ---
 

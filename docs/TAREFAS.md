@@ -7,7 +7,7 @@
   - [x] Áreas novas: Investigação, Comunicação; `featured` passa a posição na home (1–4)
   - [x] Mini-frigorífico Peltier (LENG1) e Drone dirigível (LENG2, colegas aceitam aparecer)
   - [x] Paiva MILP fica de fora (decisão do utilizador)
-  - [x] Destaques só com boas fotos (Dragster, TrackBotGP, Peltier, Space Benders); paper sem o bloco de autores/emails
+  - [x] Destaques só com boas fotos (Dragster, TrackBotGP, Peltier, dirigível); paper sem o bloco de autores/emails
   - [ ] Meireles: diagramas/mockups se aparecerem; foto grande do robô Dragster (só há miniatura 160px)
   - [ ] Polimento: axe sem erros críticos, imagens ≤1 MB
 
