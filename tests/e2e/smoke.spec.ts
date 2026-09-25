@@ -89,6 +89,7 @@ test("no horizontal overflow and screenshots for review", async ({
 }, testInfo) => {
   for (const p of [
     "pt/",
+    "en/",
     "pt/projects/",
     "en/projects/",
     "pt/projects/dragster-fnr-2026/",
@@ -178,5 +179,63 @@ test.describe("archive without JavaScript", () => {
     await expect(page.locator(".project-row")).toHaveCount(2);
     await expect(page.locator(".project-row").first()).toBeVisible();
     await expect(page.locator("[data-filters]")).toBeHidden();
+  });
+});
+
+test.describe("recruiter home", () => {
+  for (const lang of ["pt", "en"] as const) {
+    test(`${lang}: CV, featured projects, about, skills and contact`, async ({
+      page,
+      request,
+      baseURL,
+    }) => {
+      await page.goto(`${lang}/`);
+
+      const cv = page.locator("a[data-cv]");
+      await expect(cv).toBeInViewport();
+      await expect(cv).toHaveAttribute("download", "");
+      const cvRes = await request.get(
+        new URL((await cv.getAttribute("href"))!, baseURL).href,
+      );
+      expect(cvRes.status()).toBe(200);
+      expect(cvRes.headers()["content-type"]).toContain("pdf");
+
+      const portrait = page.locator("main picture img").first();
+      await expect(portrait).toHaveAttribute("alt", /.+/);
+      await expect(portrait).toHaveAttribute("width", /\d+/);
+      await expect(portrait).toHaveAttribute("height", /\d+/);
+
+      await expect(page.locator("main h2")).toHaveCount(4);
+
+      const cards = page.locator("a[data-featured]");
+      await expect(cards).toHaveCount(2);
+      for (const href of await cards.evaluateAll((els) =>
+        els.map((el) => (el as HTMLAnchorElement).href),
+      )) {
+        expect(href).toMatch(new RegExp(`/${lang}/projects/[a-z0-9-]+/$`));
+      }
+
+      await page.locator("a[data-all-projects]").click();
+      await expect(page).toHaveURL(new URL(`${lang}/projects/`, baseURL).href);
+      await page.goBack();
+
+      const contact = page.locator("[data-contact]");
+      await expect(contact.locator('a[href^="mailto:"]')).toHaveCount(1);
+      await expect(contact.locator('a[href*="linkedin.com/in/"]')).toHaveCount(
+        1,
+      );
+      await expect(contact.locator('a[href*="github.com/"]')).toHaveCount(1);
+      await expect(contact.locator("a[download]")).toHaveCount(1);
+    });
+  }
+});
+
+test.describe("home without JavaScript", () => {
+  test.use({ javaScriptEnabled: false });
+  test("shows every section", async ({ page }) => {
+    await page.goto("pt/");
+    await expect(page.locator("a[data-featured]")).toHaveCount(2);
+    await expect(page.locator("[data-contact]")).toBeVisible();
+    await expect(page.locator("a[data-cv]")).toBeVisible();
   });
 });

@@ -46,3 +46,28 @@ Portfólio bilingue (PT/EN): home para recrutadores + arquivo completo de projet
 - Tradução dupla dá trabalho → `draft: true` até haver EN.
 - Trabalhos ISEP: confirmar o que é publicável (regras da UC, colegas de grupo).
 - APIs recentes (Astro 7, Tailwind 4.3) → confirmar na doc em cada fatia.
+
+## Fatia 5 — detalhe (home para recrutadores)
+
+Segue o wireframe "Home" de `docs/DESIGN.md`. Tudo estático, sem JS.
+
+Secções (ordem):
+
+1. **Hero** — nome (já existe) · frase + meta · CTA "Descarregar CV" · retrato (`src/assets/portrait.png` via `<Picture>` avif/webp) · linha de 3 factos-prova: 8.º Nacional de Robótica (Dragster) · 2.º Open Robótica ISEP · Erasmus+ htw saar 2026.
+2. **Projetos em destaque** — `getProjects(lang)` filtrado por `featured`, máx. 4; primeiro a 7 col, segundo a 5 col; capa 3:2 + título + área · ano; "Ver todos (N) →" para o arquivo.
+3. **Sobre** — 1.ª pessoa, 1 parágrafo curto, factos do CV (ISEP 3.º ano, robôs de raiz, Erasmus+, interesse em embebidos/automação).
+4. **O que sei fazer** — 4 colunas tipográficas, listas simples (sem barras): Hardware (PCB KiCad/EasyEDA, esquemas, soldadura, sensores, drivers de motor) · Embebidos (C, Teensy 4.0, Arduino, MQTT) · Software (Python, PHP, SQL/MySQL, web) · Dados e gestão (regressão, MILP, modelação 3D, MS Project, Scrum). Idiomas: PT nativo, EN B2.
+5. **Campo vermelho de contacto** — "Vamos falar." + email · LinkedIn · GitHub + CV. Contactos saem para `src/lib/contacts.ts` (partilhado com o Footer).
+
+Textos novos em `src/i18n/ui.ts` (PT e EN).
+
+Critérios de aceitação (e2e Playwright, desktop + mobile, PT e EN):
+
+- [x] Home tem h1 com o nome, secções com h2: destaques, sobre, competências, contacto.
+- [x] Link do CV resolve (200) e tem `download`; mailto, LinkedIn e GitHub presentes no campo de contacto.
+- [x] Cartões de destaque = projetos `featured`, apontam para páginas de projeto existentes (sem 404); "Ver todos" leva ao arquivo da mesma língua.
+- [x] Retrato com `alt` não vazio e `width`/`height` (sem salto de layout).
+- [x] CTA do CV visível no primeiro viewport a 1440×900 (e acima da dobra num portátil).
+- [x] Sem scroll horizontal a 390 px; screenshots 1440×900 e 390×844 revistas.
+- [x] Funciona com JS desligado (conteúdo igual).
+- [x] `npm run check` passa; e2e anteriores continuam verdes.

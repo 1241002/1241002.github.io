@@ -1,5 +1,6 @@
 ---
 import { useTranslations, type Locale } from "@/i18n/ui";
+import { contacts } from "@/lib/contacts";
 
 interface Props {
   lang: Locale;
@@ -8,14 +9,6 @@ interface Props {
 const { lang } = Astro.props;
 const t = useTranslations(lang);
 const year = new Date().getFullYear();
-const contacts = [
-  {
-    label: "alexandremccosta@gmail.com",
-    href: "mailto:alexandremccosta@gmail.com",
-  },
-  { label: "LinkedIn", href: "https://www.linkedin.com/in/alexandremccosta/" },
-  { label: "GitHub", href: "https://github.com/1241002" },
-];
 ---
 
 <footer class="mt-section border-t-2 border-ink">

@@ -1,18 +1,48 @@
 ---
-// Placeholder home (slice 1). The recruiter home is built in slice 5.
+import { Image, Picture } from "astro:assets";
 import BaseLayout from "@/layouts/BaseLayout.astro";
+import portrait from "@/assets/portrait.png";
 import {
   assetPath,
   getStaticLocalePaths,
   isLocale,
+  localePath,
   useTranslations,
 } from "@/i18n/ui";
+import { skills } from "@/i18n/skills";
+import { contacts } from "@/lib/contacts";
+import { getProjects } from "@/lib/projects";
 
 export const getStaticPaths = getStaticLocalePaths;
+
+const MAX_FEATURED = 4;
+// Large/small alternation on the 12-column grid: 7+5, then 5+7.
+const featuredSpans = [
+  "lg:col-span-7",
+  "lg:col-span-5",
+  "lg:col-span-5",
+  "lg:col-span-7",
+];
 
 const { lang } = Astro.params;
 if (!isLocale(lang)) throw new Error(`Unknown locale: ${lang}`);
 const t = useTranslations(lang);
+const projects = await getProjects(lang);
+const featured = projects.filter((p) => p.meta.featured).slice(0, MAX_FEATURED);
+const cvHref = assetPath("cv/cv-alexandre-costa.pdf");
+const facts = [
+  {
+    label: t("home.fact.fnr"),
+    href: localePath(lang, "projects/dragster-fnr-2026/"),
+  },
+  {
+    label: t("home.fact.open"),
+    href: localePath(lang, "projects/trackbotgp-open-robotica-2026/"),
+  },
+  { label: t("home.fact.erasmus") },
+];
+const cvButton =
+  "inline-block px-6 py-3 no-underline transition-colors duration-150 ease-out-expo";
 ---
 
 <BaseLayout lang={lang}>
@@ -24,17 +54,173 @@ const t = useTranslations(lang);
       </span>
     </h1>
   </section>
-  <section class="grid-page mt-12 gap-y-6 border-t border-ink pt-8">
-    <div class="col-span-full sm:col-span-4 lg:col-span-6">
+
+  <section class="grid-page mt-12 gap-y-8 border-t border-ink pt-8">
+    <div class="col-span-full sm:col-span-4 lg:col-span-7">
       <p class="stretch-h2 text-h2">{t("home.tagline")}</p>
       <p class="mt-4 text-muted">{t("home.meta")}</p>
       <a
-        href={assetPath("cv/cv-alexandre-costa.pdf")}
+        href={cvHref}
         download
-        class="mt-8 inline-block bg-ink px-6 py-3 text-paper no-underline transition-colors hover:bg-signal hover:text-ink"
+        class={`${cvButton} mt-8 bg-ink text-paper hover:bg-signal hover:text-ink`}
+        data-cv
       >
-        {t("cv.download")}
+        {t("cv.download")} ↓
       </a>
+    </div>
+    <Picture
+      src={portrait}
+      alt={t("home.portraitAlt")}
+      formats={["avif", "webp"]}
+      widths={[320, 637]}
+      sizes="(min-width: 64rem) 30vw, (min-width: 40rem) 33vw, 50vw"
+      loading="eager"
+      class="aspect-square w-full bg-rule-soft object-cover"
+      pictureAttributes={{
+        class: "col-span-2 lg:col-span-4 lg:col-start-9",
+      }}
+    />
+    <ul
+      class="col-span-full flex flex-col gap-y-2 border-t border-ink pt-4 text-meta font-medium sm:flex-row sm:flex-wrap sm:gap-x-10"
+      aria-label={t("home.facts")}
+    >
+      {facts.map((f) => (
+        <li class="flex items-baseline gap-2">
+          <span
+            class="inline-block size-2 shrink-0 bg-signal"
+            aria-hidden="true"
+          />
+          {f.href ? (
+            <a href={f.href} class="underline hover:text-signal-ink">
+              {f.label}
+            </a>
+          ) : (
+            f.label
+          )}
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section
+    class="grid-page mt-section gap-y-8 border-t-2 border-ink pt-8"
+    aria-labelledby="featured"
+  >
+    <div class="col-span-full flex flex-wrap items-baseline justify-between gap-4">
+      <h2 id="featured" class="stretch-h2 text-h2">
+        {t("home.featured")}
+      </h2>
+      <a
+        href={localePath(lang, "projects/")}
+        class="text-meta font-medium underline hover:text-signal-ink"
+        data-all-projects
+      >
+        {t("home.allProjects")} ({projects.length}) →
+      </a>
+    </div>
+    <ul class="col-span-full grid grid-cols-subgrid gap-y-10">
+      {featured.map((project, i) => (
+        <li class={`col-span-full sm:col-span-3 ${featuredSpans[i]}`}>
+          <a
+            href={localePath(lang, `projects/${project.id}/`)}
+            class="group block no-underline"
+            data-featured
+          >
+            <Image
+              src={project.meta.cover}
+              alt={project.coverAlt}
+              widths={[480, 800, 1200]}
+              sizes="(min-width: 64rem) 55vw, (min-width: 40rem) 50vw, 100vw"
+              class="aspect-[3/2] w-full bg-rule-soft object-cover"
+            />
+            <h3 class="mt-4 text-h3 font-[650] group-hover:text-signal-ink group-hover:underline">
+              {project.title}
+            </h3>
+            <p class="mt-1 text-meta text-muted tabular-nums">
+              {project.meta.areas.map((a) => t(`area.${a}`)).join(", ")} ·{" "}
+              {project.meta.date.getFullYear()}
+            </p>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section
+    class="grid-page mt-section gap-y-6 border-t-2 border-ink pt-8"
+    aria-labelledby="about"
+  >
+    <h2 id="about" class="stretch-h2 col-span-full text-h2 lg:col-span-4">
+      {t("home.about")}
+    </h2>
+    <div class="col-span-full max-w-prose space-y-5 lg:col-span-7 lg:col-start-5">
+      <p>{t("home.about.p1")}</p>
+      <p>{t("home.about.p2")}</p>
+    </div>
+  </section>
+
+  <section
+    class="grid-page mt-section gap-y-8 border-t-2 border-ink pt-8"
+    aria-labelledby="skills"
+  >
+    <h2 id="skills" class="stretch-h2 col-span-full text-h2">
+      {t("home.skills")}
+    </h2>
+    {skills[lang].map((group) => (
+      <div class="col-span-full sm:col-span-3">
+        <h3 class="border-t border-ink pt-3 text-h3 font-[650]">
+          {group.title}
+        </h3>
+        <ul class="mt-3 space-y-1">
+          {group.items.map((item) => (
+            <li>{item}</li>
+          ))}
+        </ul>
+      </div>
+    ))}
+    <p class="col-span-full text-meta">
+      <span class="text-muted">{t("home.languages")}:</span>{" "}
+      {t("home.languages.list")}
+    </p>
+  </section>
+
+  <section
+    class="on-signal mt-section bg-signal text-ink"
+    aria-labelledby="contact"
+    data-contact
+  >
+    <div class="grid-page gap-y-8 py-16 lg:py-24">
+      <div class="col-span-full lg:col-span-6">
+        <h2 id="contact" class="stretch-h1 text-h1">
+          {t("home.contact")}
+        </h2>
+        <p class="mt-4 max-w-prose">{t("home.contact.lead")}</p>
+      </div>
+      <div class="col-span-full flex flex-col items-start gap-6 lg:col-span-5 lg:col-start-8 lg:self-end">
+        <ul
+          class="space-y-2 text-h3 font-[650]"
+          aria-label={t("footer.contact")}
+        >
+          {contacts.map((c) => (
+            <li>
+              <a
+                href={c.href}
+                class="break-all underline decoration-2 hover:text-paper"
+                rel={c.href.startsWith("http") ? "me noopener" : undefined}
+              >
+                {c.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+        <a
+          href={cvHref}
+          download
+          class={`${cvButton} bg-ink text-paper hover:bg-paper hover:text-ink`}
+        >
+          {t("cv.download")} ↓
+        </a>
+      </div>
     </div>
   </section>
 </BaseLayout>
