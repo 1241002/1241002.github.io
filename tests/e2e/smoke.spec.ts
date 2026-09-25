@@ -95,6 +95,10 @@ test("no horizontal overflow and screenshots for review", async ({
     "pt/projects/dragster-fnr-2026/",
   ]) {
     await page.goto(p);
+    // Let the name's entrance finish so the capture shows the settled page.
+    await page.evaluate(() =>
+      Promise.all(document.getAnimations().map((a) => a.finished)),
+    );
     // Measure the settled layout: the fallback face has no condensed width.
     const overflow = await page.evaluate(async () => {
       await document.fonts.ready;
@@ -237,5 +241,30 @@ test.describe("home without JavaScript", () => {
     await expect(page.locator("a[data-featured]")).toHaveCount(2);
     await expect(page.locator("[data-contact]")).toBeVisible();
     await expect(page.locator("a[data-cv]")).toBeVisible();
+  });
+});
+
+test.describe("home name entrance", () => {
+  test("h1 reads as the plain name and the page ships no JS island", async ({
+    page,
+  }) => {
+    await page.goto("pt/");
+    await expect(
+      page.getByRole("heading", { level: 1, name: "Alexandre Costa" }),
+    ).toBeVisible();
+    await expect(page.locator("astro-island")).toHaveCount(0);
+    const letters = page.locator("h1 .letter");
+    await expect(letters).toHaveCount(15); // 14 letters + the red full stop
+    await expect(letters.first()).toHaveCSS("animation-name", "letter-in");
+  });
+
+  test.describe("with reduced motion", () => {
+    test.use({ reducedMotion: "reduce" });
+    test("the name is static and fully visible", async ({ page }) => {
+      await page.goto("en/");
+      const letters = page.locator("h1 .letter");
+      await expect(letters.first()).toHaveCSS("animation-name", "none");
+      await expect(letters.last()).toHaveCSS("opacity", "1");
+    });
   });
 });

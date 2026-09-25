@@ -47,3 +47,10 @@ Porquê: o nome a encher a grelha é o gesto do cartaz suíço; excede o máximo
 ## 2026-09-25 Primeiros projetos e fotos
 
 Dragster (FNR 2026) e TrackBotGP (Open Robótica ISEP 2026), factos só do CV e da folha de resultados. Capa do Dragster com a equipa de costas (sem caras); 1 foto de corpo por projeto. Por confirmar: consentimento dos colegas para as fotos com caras. Contexto do Dragster marcado como `isep` (equipa do ISEP, não é UC).
+
+## 2026-09-25 Entrada do nome em CSS puro (substitui React Bits no hero)
+
+Contexto: a Fatia 6 previa React Bits no hero, com orçamento de ~60 KB gzip. O DESIGN.md exige conteúdo visível sem JS, e o nome é o elemento LCP.
+Opções: A) React Bits SplitText via ilha React (`client:media`) — medido: React ~66 KB + componente GSAP ~33 KB ≈ 99 KB gzip, e precisa de esconder as letras antes do paint + failsafe; B) mesmo efeito letra a letra em CSS (`@keyframes` + `--i` por letra).
+Escolha: B (decisão do utilizador). `src/components/DisplayName.astro`; animação só em `prefers-reduced-motion: no-preference`; nome acessível via `sr-only`, letras `aria-hidden`.
+Porquê: 0 KB de JS, sem flash nem risco de nome em branco. React Bits fica disponível para um sítio onde compense o custo; `@astrojs/react` continua instalado mas nenhuma página hidrata ilhas.

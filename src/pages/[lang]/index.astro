@@ -1,6 +1,7 @@
 ---
 import { Image, Picture } from "astro:assets";
 import BaseLayout from "@/layouts/BaseLayout.astro";
+import DisplayName from "@/components/DisplayName.astro";
 import portrait from "@/assets/portrait.png";
 import {
   assetPath,
@@ -47,12 +48,7 @@ const cvButton =
 
 <BaseLayout lang={lang}>
   <section class="grid-page pt-8">
-    <h1 class="text-display-fit col-span-full uppercase">
-      Alexandre Costa
-      <span class="text-signal" aria-hidden="true">
-        .
-      </span>
-    </h1>
+    <DisplayName name="Alexandre Costa" />
   </section>
 
   <section class="grid-page mt-12 gap-y-8 border-t border-ink pt-8">

@@ -23,7 +23,7 @@ Portfólio bilingue (PT/EN): home para recrutadores + arquivo completo de projet
 - D3 URLs: prefixo nas duas línguas (`/pt/projects/<slug>/`), `trailingSlash: "always"`, `/` redireciona.
 - D4 Base: repo `<user>.github.io` sem `base`; todos os links via helpers.
 - D5 Filtro: HTML estático + script vanilla (<40 linhas), `aria-pressed`.
-- D6 React Bits: só no hero da home, via `MotionGate` (reduced-motion + import dinâmico), orçamento ~60 KB gzip.
+- D6 Entrada do nome: CSS puro, letra a letra, só com `prefers-reduced-motion: no-preference` (React Bits medido a ~99 KB gzip, rejeitado — ver DECISOES.md).
 - D7 Testes: Playwright (e2e + screenshots) e Vitest só para a junção PT/EN.
 
 ## Fatias
@@ -34,7 +34,7 @@ Portfólio bilingue (PT/EN): home para recrutadores + arquivo completo de projet
 3. Modelo de conteúdo + página de projeto (2 projetos reais) — schema, junção, Vitest.
 4. Arquivo com filtro — cards, filtro área/contexto, teste com e sem JS.
 5. Home para recrutadores (estática) — hero, sobre, competências, destaques, CV, contactos.
-6. React Bits no hero — `shadcn init` isolado, `MotionGate`, teste de ilhas e reduced-motion.
+6. Entrada do nome em CSS — letra a letra, sem JS, teste de reduced-motion e de 0 ilhas.
 7. Conteúdo completo + polimento — todos os projetos, imagens ≤1 MB, axe sem erros críticos.
 
 ## Riscos

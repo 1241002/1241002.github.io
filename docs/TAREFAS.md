@@ -2,11 +2,9 @@
 
 ## Agora
 
-- [ ] Fatia 6 — React Bits no hero
+- [ ] Fatia 7 — conteúdo completo + polimento
 
 ## A seguir
-
-- [ ] Fatia 7 — conteúdo completo + polimento
 
 ## Bloqueios
 
@@ -15,6 +13,7 @@
 
 ## Feito
 
+- [x] Fatia 6 — entrada do nome letra a letra em CSS puro (React Bits medido a ~99 KB gzip e rejeitado pelo utilizador); estático com reduced-motion; 0 ilhas JS; e2e 36/36 (2026-09-25)
 - [x] Fatia 5 — home para recrutadores: hero com retrato + 3 factos-prova, destaques (`featured`, máx. 4, 7+5 col), sobre, competências (sem "Ferramentas de IA", decisão do utilizador), campo vermelho de contacto; contactos partilhados em `src/lib/contacts.ts`; e2e 32/32 (2026-09-25)
 - [x] Fatia 4 — arquivo `/projects/`: catálogo numerado (mais recente = número mais alto), filtros área/contexto em JS vanilla (`aria-pressed`, `aria-disabled` quando não há resultados possíveis), estado vazio, sem JS mostra tudo; hover com linha vermelha + capa; e2e 26/26 (2026-09-25)
 - [x] Fatia 3 — Content Collections (`projects` pt.md + `projectsEn` en.md), junção PT/EN com Vitest (4 testes) e teste negativo (sem en.md → build falha com mensagem), página de projeto com capa AVIF/WebP; 2 projetos reais (Dragster FNR 2026, TrackBotGP Open Robótica 2026); e2e 22/22 (2026-09-25)

@@ -18,7 +18,7 @@ Fonte de verdade visual. Tokens implementados em `src/styles/global.css` (`@them
 - **STORY:** o visitante vê o nome enorme e a frase "construo coisas inteiras", percorre o índice de projetos por área, abre um, e encontra o CV/contacto num campo vermelho impossível de falhar.
 - **FIRST VIEWPORT:** barra superior fina (AC · Projetos · CV · EN) sobre filete; nome "ALEXANDRE COSTA" condensado a encher a largura da grelha (1 linha desktop, 2 linhas mobile), ponto vermelho no fim; por baixo, em grelha de 12 colunas: frase de posicionamento (col 1–6), retrato (col 9–12), 3 factos-prova (8.º Nacional · 2.º Open ISEP · Erasmus+) numa linha, CTA "Descarregar CV" visível sem scroll.
 - **FORM:** direção fixada pelo utilizador (sem seed de concept-seed). Build code-led (sem geração de imagem).
-- **Interação assinatura:** o nome entra letra a letra (React Bits, uma só vez, só na home; estático com reduced-motion). Hover nas linhas do índice: a linha inteira passa a vermelho e a capa do projeto aparece.
+- **Interação assinatura:** o nome entra letra a letra (CSS, uma só vez, só na home; estático com reduced-motion). Hover nas linhas do índice: a linha inteira passa a vermelho e a capa do projeto aparece.
 - **FINISH:** unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance.
 
 ## Cor
@@ -136,9 +136,9 @@ Ano 2026 │ Área Robótica, HW │ Contexto ISEP │ Tech C, KiCad, Teensy │
 
 ## Motion
 
-- Um único momento autoral por página: na home, o nome entra letra a letra (React Bits, via `MotionGate`). Restantes páginas: sem animação de entrada.
+- Um único momento autoral por página: na home, o nome entra letra a letra (CSS puro, `DisplayName.astro`: cada letra sobe 0.35em e aparece, 600ms, 45ms entre letras, o ponto vermelho por último). Restantes páginas: sem animação de entrada.
 - Transições de hover: 150ms, `cubic-bezier(0.16, 1, 0.3, 1)` (ease-out exponencial).
-- `prefers-reduced-motion: reduce` → tudo estático, o JS da animação não é carregado.
+- `prefers-reduced-motion: reduce` → tudo estático (a animação só existe dentro de `no-preference`).
 - Conteúdo visível por defeito (sem `opacity: 0` à espera de JS).
 
 ## Plataforma
