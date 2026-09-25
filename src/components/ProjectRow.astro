@@ -1,0 +1,58 @@
+---
+import { Image } from "astro:assets";
+import { localePath, useTranslations, type Locale } from "@/i18n/ui";
+import type { Project } from "@/lib/projects";
+
+interface Props {
+  lang: Locale;
+  project: Project;
+  /** Catalogue number: chronological, oldest = 1. */
+  number: number;
+}
+
+const { lang, project, number } = Astro.props;
+const t = useTranslations(lang);
+const { meta } = project;
+const areaLabels = meta.areas.map((a) => t(`area.${a}`)).join(", ");
+---
+
+<li
+  class="project-row group relative border-b border-ink"
+  data-areas={meta.areas.join(" ")}
+  data-context={meta.context}
+>
+  <a
+    href={localePath(lang, `projects/${project.id}/`)}
+    class="-mx-3 grid grid-cols-[4.5rem_1fr] items-center gap-x-4 gap-y-1 px-3 py-4 no-underline transition-colors duration-150 ease-out-expo group-hover:bg-signal sm:grid-cols-[3.5rem_1fr_10rem_6rem_4rem] lg:py-5"
+  >
+    <Image
+      src={meta.cover}
+      alt=""
+      widths={[160, 320]}
+      sizes="4.5rem"
+      class="row-span-2 aspect-square w-full bg-rule-soft object-cover sm:hidden"
+    />
+    <span class="hidden text-meta text-muted tabular-nums group-hover:text-ink sm:block">
+      {String(number).padStart(3, "0")}
+    </span>
+    <span class="text-h3 leading-tight font-[650]">{project.title}</span>
+    <span class="text-meta text-muted group-hover:text-ink sm:hidden">
+      {areaLabels} · {t(`context.${meta.context}`)} · {meta.date.getFullYear()}
+    </span>
+    <span class="hidden text-meta sm:block">{areaLabels}</span>
+    <span class="hidden text-meta sm:block">
+      {t(`context.${meta.context}`)}
+    </span>
+    <span class="hidden text-meta tabular-nums sm:block sm:text-right">
+      {meta.date.getFullYear()}
+    </span>
+  </a>
+  <Image
+    src={meta.cover}
+    alt=""
+    widths={[320, 640]}
+    sizes="16rem"
+    loading="lazy"
+    class="pointer-events-none absolute top-1/2 right-[22rem] z-10 hidden aspect-[3/2] w-[16rem] -translate-y-1/2 object-cover opacity-0 transition-opacity duration-150 ease-out-expo group-hover:opacity-100 lg:block"
+  />
+</li>

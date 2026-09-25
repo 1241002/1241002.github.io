@@ -2,11 +2,10 @@
 
 ## Agora
 
-- [ ] Fatia 4 — arquivo com filtro
+- [ ] Fatia 5 — home para recrutadores
 
 ## A seguir
 
-- [ ] Fatia 5 — home para recrutadores
 - [ ] Fatia 6 — React Bits no hero
 - [ ] Fatia 7 — conteúdo completo + polimento
 
@@ -17,6 +16,7 @@
 
 ## Feito
 
+- [x] Fatia 4 — arquivo `/projects/`: catálogo numerado (mais recente = número mais alto), filtros área/contexto em JS vanilla (`aria-pressed`, `aria-disabled` quando não há resultados possíveis), estado vazio, sem JS mostra tudo; hover com linha vermelha + capa; e2e 26/26 (2026-09-25)
 - [x] Fatia 3 — Content Collections (`projects` pt.md + `projectsEn` en.md), junção PT/EN com Vitest (4 testes) e teste negativo (sem en.md → build falha com mensagem), página de projeto com capa AVIF/WebP; 2 projetos reais (Dragster FNR 2026, TrackBotGP Open Robótica 2026); e2e 22/22 (2026-09-25)
 - [x] Fatia 2 — GitHub Pages via Actions (check → e2e → deploy); site em https://1241002.github.io ; e2e 16/16 contra o site publicado (`E2E_URL=https://1241002.github.io/ npx playwright test`) (2026-09-25)
 - [x] Fatia 1 — i18n `/pt/` `/en/` (seletor mantém a página), BaseLayout (lang, hreflang, canonical), Header/Footer, raiz → `/pt/`, 404 bilingue, arquivo provisório; Playwright 16/16 (desktop+mobile), também com `BASE_PATH=/portfolio` (2026-09-25)

@@ -131,7 +131,7 @@ Ano 2026 │ Área Robótica, HW │ Contexto ISEP │ Tech C, KiCad, Teensy │
 - **Desativado:** botão de filtro sem resultados possíveis → `muted`, `aria-disabled`.
 - **Seletor de língua:** mostra só a língua de destino ("EN" na versão PT, "PT" na EN), com `hreflang` e `lang`.
 - **Sucesso / ativo:** filtro ativo = preenchido `ink` com texto `paper` (`aria-pressed="true"`); link atual na nav sublinhado 2px.
-- **Hover:** links → `signal-ink` + sublinhado offset 4px; linha do índice → fundo `signal`, texto `ink`.
+- **Hover:** links → `signal-ink` + sublinhado offset 4px; linha do índice → fundo `signal` (sangra 12px além da grelha), texto `ink`, e a capa (16rem, 3:2) aparece à esquerda da coluna Área (só ≥ 1024px).
 - **Focus:** anel 2px `ink`, offset 3px, sempre visível com teclado.
 
 ## Motion

@@ -53,13 +53,7 @@ test("unknown URL shows the bilingual 404", async ({ page }) => {
 
 test("no internal link is broken", async ({ page, request, baseURL }) => {
   const origin = new URL(baseURL!).origin;
-  // Project pages are seeded until the archive links to them (slice 4).
-  const queue = [
-    "pt/",
-    "en/",
-    "pt/projects/trackbotgp-open-robotica-2026/",
-    "en/projects/trackbotgp-open-robotica-2026/",
-  ].map((p) => new URL(p, baseURL).href);
+  const queue = [new URL("pt/", baseURL).href, new URL("en/", baseURL).href];
   const seen = new Set<string>();
   const broken: string[] = [];
 
@@ -93,7 +87,12 @@ test("no internal link is broken", async ({ page, request, baseURL }) => {
 test("no horizontal overflow and screenshots for review", async ({
   page,
 }, testInfo) => {
-  for (const p of ["pt/", "en/projects/", "pt/projects/dragster-fnr-2026/"]) {
+  for (const p of [
+    "pt/",
+    "pt/projects/",
+    "en/projects/",
+    "pt/projects/dragster-fnr-2026/",
+  ]) {
     await page.goto(p);
     // Measure the settled layout: the fallback face has no condensed width.
     const overflow = await page.evaluate(async () => {
@@ -137,4 +136,47 @@ test("project page serves an optimised cover and an alt text", async ({
   expect(coverBox!.width).toBeGreaterThan(mainBox!.width * 0.85);
   const bodyImages = page.locator(".prose-body img");
   await expect(bodyImages.first()).toHaveAttribute("alt", /.+/);
+});
+
+test.describe("archive", () => {
+  test("lists every project, newest first, and filters by area and context", async ({
+    page,
+  }) => {
+    await page.goto("pt/projects/");
+    const rows = page.locator(".project-row");
+    await expect(rows).toHaveCount(2);
+    await expect(rows.first()).toContainText("Robô Dragster");
+    await expect(page.locator("[data-count]")).toHaveText("(2)");
+
+    const filters = page.locator("[data-filters]");
+    await expect(filters).toBeVisible();
+    const software = filters.getByRole("button", { name: "Software" });
+    await expect(software).toHaveAttribute("aria-disabled", "true");
+    await software.click({ force: true }); // disabled: must be a no-op
+    await expect(software).toHaveAttribute("aria-pressed", "false");
+    await expect(rows.filter({ visible: true })).toHaveCount(2);
+
+    const hardware = filters.getByRole("button", { name: "Hardware" });
+    await hardware.click();
+    await expect(hardware).toHaveAttribute("aria-pressed", "true");
+    await expect(rows.filter({ visible: true })).toHaveCount(2);
+    await expect(
+      filters.getByRole("button", { name: "Pessoal" }),
+    ).toHaveAttribute("aria-disabled", "true");
+
+    await rows.first().getByRole("link").click();
+    await expect(page).toHaveURL(/projects\/dragster-fnr-2026\/$/);
+  });
+});
+
+test.describe("archive without JavaScript", () => {
+  test.use({ javaScriptEnabled: false });
+  test("shows every project and hides the filter controls", async ({
+    page,
+  }) => {
+    await page.goto("en/projects/");
+    await expect(page.locator(".project-row")).toHaveCount(2);
+    await expect(page.locator(".project-row").first()).toBeVisible();
+    await expect(page.locator("[data-filters]")).toBeHidden();
+  });
 });

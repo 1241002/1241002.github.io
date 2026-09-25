@@ -1,18 +1,167 @@
 ---
-// Placeholder archive (slice 1). The filterable archive is built in slice 4.
 import BaseLayout from "@/layouts/BaseLayout.astro";
+import ProjectRow from "@/components/ProjectRow.astro";
+import { areas, contexts } from "@/content.config";
 import { getStaticLocalePaths, isLocale, useTranslations } from "@/i18n/ui";
+import { getProjects } from "@/lib/projects";
 
 export const getStaticPaths = getStaticLocalePaths;
 
 const { lang } = Astro.params;
 if (!isLocale(lang)) throw new Error(`Unknown locale: ${lang}`);
 const t = useTranslations(lang);
+const projects = await getProjects(lang);
+
+const groups = [
+  {
+    key: "area",
+    label: t("archive.area"),
+    options: areas.map((a) => ({ value: a, label: t(`area.${a}`) })),
+  },
+  {
+    key: "context",
+    label: t("archive.context"),
+    options: contexts.map((c) => ({ value: c, label: t(`context.${c}`) })),
+  },
+];
+const chip =
+  "border border-ink px-3 py-1.5 text-meta font-medium transition-colors duration-150 ease-out-expo hover:bg-ink hover:text-paper aria-pressed:bg-ink aria-pressed:text-paper aria-disabled:cursor-not-allowed aria-disabled:border-rule-soft aria-disabled:text-muted aria-disabled:hover:bg-transparent";
 ---
 
-<BaseLayout lang={lang} title={t("projects.title")}>
+<BaseLayout
+  lang={lang}
+  title={t("projects.title")}
+  description={t("archive.lead")}
+>
   <section class="grid-page gap-y-6 pt-12">
-    <h1 class="stretch-h1 col-span-full text-h1">{t("projects.title")}</h1>
-    <p class="col-span-full text-muted">{t("projects.soon")}</p>
+    <h1 class="stretch-h1 col-span-full text-h1">
+      {t("projects.title")}{" "}
+      <span class="text-muted tabular-nums" data-count>
+        ({projects.length})
+      </span>
+    </h1>
+    <p class="col-span-full text-h3 lg:col-span-8">{t("archive.lead")}</p>
+  </section>
+
+  <section class="grid-page mt-10" aria-label={t("archive.filters")}>
+    <div
+      class="col-span-full flex flex-col gap-4 lg:flex-row lg:gap-12"
+      data-filters
+      hidden
+    >
+      {groups.map((g) => (
+        <div
+          role="group"
+          aria-label={g.label}
+          class="flex flex-wrap items-center gap-2"
+        >
+          <span class="mr-2 text-meta text-muted">{g.label}</span>
+          <button
+            type="button"
+            class={chip}
+            data-group={g.key}
+            data-value="all"
+            aria-pressed="true"
+          >
+            {t("archive.all")}
+          </button>
+          {g.options.map((o) => (
+            <button
+              type="button"
+              class={chip}
+              data-group={g.key}
+              data-value={o.value}
+              aria-pressed="false"
+            >
+              {o.label}
+            </button>
+          ))}
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="grid-page mt-8">
+    <div class="col-span-full">
+      <div
+        class="hidden grid-cols-[3.5rem_1fr_10rem_6rem_4rem] gap-x-4 border-b-2 border-ink pb-2 text-meta text-muted sm:grid"
+        aria-hidden="true"
+      >
+        <span>{t("archive.number")}</span>
+        <span>{t("archive.project")}</span>
+        <span>{t("archive.area")}</span>
+        <span>{t("archive.context")}</span>
+        <span class="text-right">{t("archive.year")}</span>
+      </div>
+      <ul class="border-t-2 border-ink sm:border-t-0" data-list>
+        {projects.map((project, i) => (
+          <ProjectRow
+            lang={lang}
+            project={project}
+            number={projects.length - i}
+          />
+        ))}
+      </ul>
+      <div class="py-12" data-empty hidden>
+        <p class="stretch-h2 text-h2">{t("archive.empty")}</p>
+        <button
+          type="button"
+          class="mt-6 bg-ink px-6 py-3 text-paper transition-colors hover:bg-signal hover:text-ink"
+          data-clear
+        >
+          {t("archive.clear")}
+        </button>
+      </div>
+    </div>
   </section>
 </BaseLayout>
+
+<script>
+  // Progressive enhancement: without JS every project stays visible.
+  type State = Record<"area" | "context", string>;
+  const state: State = { area: "all", context: "all" };
+  const rows = [...document.querySelectorAll<HTMLElement>(".project-row")];
+  const buttons = [
+    ...document.querySelectorAll<HTMLButtonElement>("[data-group]"),
+  ];
+  const count = document.querySelector<HTMLElement>("[data-count]")!;
+  const empty = document.querySelector<HTMLElement>("[data-empty]")!;
+
+  const matches = (row: HTMLElement, s: State) =>
+    (s.area === "all" || row.dataset.areas!.split(" ").includes(s.area)) &&
+    (s.context === "all" || row.dataset.context === s.context);
+
+  function apply() {
+    let visible = 0;
+    for (const row of rows) {
+      row.hidden = !matches(row, state);
+      if (!row.hidden) visible++;
+    }
+    for (const b of buttons) {
+      const group = b.dataset.group as keyof State;
+      const value = b.dataset.value!;
+      b.setAttribute("aria-pressed", String(state[group] === value));
+      const possible = rows.some((r) =>
+        matches(r, { ...state, [group]: value }),
+      );
+      b.setAttribute("aria-disabled", String(!possible));
+    }
+    count.textContent = `(${visible})`;
+    empty.hidden = visible > 0;
+  }
+
+  for (const b of buttons) {
+    b.addEventListener("click", () => {
+      if (b.getAttribute("aria-disabled") === "true") return;
+      state[b.dataset.group as keyof State] = b.dataset.value!;
+      apply();
+    });
+  }
+  document.querySelector("[data-clear]")!.addEventListener("click", () => {
+    state.area = state.context = "all";
+    apply();
+  });
+
+  document.querySelector<HTMLElement>("[data-filters]")!.hidden = false;
+  apply();
+</script>

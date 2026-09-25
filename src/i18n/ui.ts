@@ -22,7 +22,6 @@ const ui = {
     "footer.contact": "Contacto",
     "footer.top": "Voltar ao topo",
     "projects.title": "Projetos",
-    "projects.soon": "O arquivo de projetos está a ser montado.",
     "home.tagline":
       "Construo coisas inteiras — da PCB ao código C, e também web e dados.",
     "home.meta": "Engenharia de Sistemas · ISEP · Porto",
@@ -44,6 +43,17 @@ const ui = {
     "area.robotics": "Robótica",
     "context.isep": "ISEP",
     "context.personal": "Pessoal",
+    "archive.lead":
+      "Tudo o que construí: robôs, placas, software e trabalhos do ISEP.",
+    "archive.filters": "Filtrar projetos",
+    "archive.area": "Área",
+    "archive.context": "Contexto",
+    "archive.all": "Todos",
+    "archive.number": "N.º",
+    "archive.project": "Projeto",
+    "archive.year": "Ano",
+    "archive.empty": "Nenhum projeto com estes filtros.",
+    "archive.clear": "Limpar filtros",
   },
   en: {
     "site.title": "Alexandre Costa",
@@ -57,7 +67,6 @@ const ui = {
     "footer.contact": "Contact",
     "footer.top": "Back to top",
     "projects.title": "Projects",
-    "projects.soon": "The project archive is being put together.",
     "home.tagline":
       "I build whole things — from the PCB to the C code, plus web and data.",
     "home.meta": "Systems Engineering · ISEP · Porto",
@@ -79,6 +88,17 @@ const ui = {
     "area.robotics": "Robotics",
     "context.isep": "ISEP",
     "context.personal": "Personal",
+    "archive.lead":
+      "Everything I've built: robots, boards, software and ISEP coursework.",
+    "archive.filters": "Filter projects",
+    "archive.area": "Area",
+    "archive.context": "Context",
+    "archive.all": "All",
+    "archive.number": "No.",
+    "archive.project": "Project",
+    "archive.year": "Year",
+    "archive.empty": "No projects match these filters.",
+    "archive.clear": "Clear filters",
   },
 } as const satisfies Record<Locale, Record<string, string>>;
 

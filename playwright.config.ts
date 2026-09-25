@@ -32,7 +32,7 @@ export default defineConfig({
     ? undefined
     : {
         command: `npx astro build && npx astro preview --port ${PORT}`,
-        port: PORT,
+        url: `http://localhost:${PORT}${BASE}`,
         reuseExistingServer: false,
         timeout: 120_000,
       },
