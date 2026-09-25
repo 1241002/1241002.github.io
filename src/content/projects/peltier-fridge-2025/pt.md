@@ -5,7 +5,7 @@ date: 2025-01-24
 areas: [hardware]
 context: isep
 course: LENG1
-tech: [Célula de Peltier, Eletrónica, Sensores, Controlo térmico]
+tech: [Célula de Peltier, Eletrónica, Sensores, Controlo liga/desliga]
 cover: ./cover.jpg
 coverAlt: O mini-frigorífico, uma caixa de esferovite com a palavra FRIGO pintada, com o dissipador e a ventoinha montados em cima, numa secretária.
 ---
@@ -14,7 +14,7 @@ Projeto de LENG1, no 1.º semestre do 1.º ano. O desafio: arrefecer uma caixa p
 
 ## O que fiz
 
-Mais uma vez, um pouco de tudo: a montagem da caixa isolada, a eletrónica, os sensores de temperatura e o código de controlo.
+Mais uma vez, um pouco de tudo: a montagem da caixa isolada, a eletrónica, os sensores de temperatura e o código de controlo — um controlo liga/desliga da célula consoante a temperatura medida.
 
 O calor do lado quente sai por um dissipador de CPU com ventoinha, montado na tampa; cá dentro, uma ventoinha pequena espalha o frio pelo volume da caixa.
 

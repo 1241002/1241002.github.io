@@ -8,7 +8,7 @@ A LENG1 project in the first semester of my first year. The brief: cool a small 
 
 ## What I did
 
-Once again, a bit of everything: assembling the insulated box, the electronics, the temperature sensors and the control code.
+Once again, a bit of everything: assembling the insulated box, the electronics, the temperature sensors and the control code — on/off control of the cell based on the measured temperature.
 
 Heat from the hot side leaves through a CPU heatsink and fan mounted on the lid; inside, a small fan spreads the cold through the box.
 
