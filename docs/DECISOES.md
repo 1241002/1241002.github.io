@@ -43,3 +43,7 @@ Porquê: o nome a encher a grelha é o gesto do cartaz suíço; excede o máximo
 ## 2026-09-25 Vermelho de texto separado do vermelho de campo
 
 `signal` #E5361B dá 4,31:1 sobre branco (só texto grande/grafismos) → `signal-ink` #D42E14 (5,0:1) para links e texto pequeno. Texto sobre campo vermelho é sempre preto (4,6:1).
+
+## 2026-09-25 Primeiros projetos e fotos
+
+Dragster (FNR 2026) e TrackBotGP (Open Robótica ISEP 2026), factos só do CV e da folha de resultados. Capa do Dragster com a equipa de costas (sem caras); 1 foto de corpo por projeto. Por confirmar: consentimento dos colegas para as fotos com caras. Contexto do Dragster marcado como `isep` (equipa do ISEP, não é UC).
