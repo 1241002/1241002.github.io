@@ -14,9 +14,11 @@
 
 ## Bloqueios
 
-- Criar repo `1241002.github.io` no GitHub e ativar Pages → "GitHub Actions" (manual, antes da fatia 2). `gh` CLI não está instalado.
+- Fotos e textos dos projetos (o utilizador envia depois).
 
 ## Feito
+
+- [x] Fatia 2 — GitHub Pages via Actions (check → e2e → deploy); site em https://1241002.github.io ; e2e 16/16 contra o site publicado (`E2E_URL=https://1241002.github.io/ npx playwright test`) (2026-09-25)
 
 - [x] Fatia 1 — i18n `/pt/` `/en/` (seletor mantém a página), BaseLayout (lang, hreflang, canonical), Header/Footer, raiz → `/pt/`, 404 bilingue, arquivo provisório; Playwright 16/16 (desktop+mobile), também com `BASE_PATH=/portfolio` (2026-09-25)
 - [x] CV publicado tal como está, com telefone (decisão do utilizador, 2026-09-25)

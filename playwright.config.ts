@@ -3,6 +3,8 @@ import { defineConfig } from "@playwright/test";
 const PORT = 4322;
 // Same BASE_PATH the build used, so tests hit the real URLs.
 const BASE = (process.env.BASE_PATH ?? "/").replace(/\/?$/, "/");
+// E2E_URL=https://1241002.github.io/ runs the suite against the deployed site.
+const REMOTE = process.env.E2E_URL;
 
 export default defineConfig({
   testDir: "tests/e2e",
@@ -11,7 +13,7 @@ export default defineConfig({
   retries: process.env.CI ? 1 : 0,
   reporter: process.env.CI ? "github" : "list",
   use: {
-    baseURL: `http://localhost:${PORT}${BASE}`,
+    baseURL: REMOTE ?? `http://localhost:${PORT}${BASE}`,
     channel: "chrome",
   },
   projects: [
@@ -26,10 +28,12 @@ export default defineConfig({
       },
     },
   ],
-  webServer: {
-    command: `npx astro build && npx astro preview --port ${PORT}`,
-    port: PORT,
-    reuseExistingServer: false,
-    timeout: 120_000,
-  },
+  webServer: REMOTE
+    ? undefined
+    : {
+        command: `npx astro build && npx astro preview --port ${PORT}`,
+        port: PORT,
+        reuseExistingServer: false,
+        timeout: 120_000,
+      },
 });
