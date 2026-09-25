@@ -6,7 +6,6 @@
 
 ## A seguir
 
-- [ ] Fatia 3 — modelo de conteúdo + página de projeto (2 projetos)
 - [ ] Fatia 4 — arquivo com filtro
 - [ ] Fatia 5 — home para recrutadores
 - [ ] Fatia 6 — React Bits no hero
@@ -14,9 +13,12 @@
 
 ## Bloqueios
 
-- Fotos e textos dos projetos (o utilizador envia depois).
+- Fotos e textos dos restantes projetos (Meireles Connect, Peltier, Paiva MILP, F1 in Schools…).
+- Confirmar com os colegas da Tropa do Massas que aceitam aparecer nas fotos.
 
 ## Feito
+
+- [x] Fatia 3 — Content Collections (`projects` pt.md + `projectsEn` en.md), junção PT/EN com Vitest (4 testes) e teste negativo (sem en.md → build falha com mensagem), página de projeto com capa AVIF/WebP; 2 projetos reais (Dragster FNR 2026, TrackBotGP Open Robótica 2026); e2e 22/22 (2026-09-25)
 
 - [x] Fatia 2 — GitHub Pages via Actions (check → e2e → deploy); site em https://1241002.github.io ; e2e 16/16 contra o site publicado (`E2E_URL=https://1241002.github.io/ npx playwright test`) (2026-09-25)
 

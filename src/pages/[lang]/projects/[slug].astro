@@ -1,0 +1,148 @@
+---
+import { Picture } from "astro:assets";
+import { render } from "astro:content";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { locales, localePath, useTranslations, type Locale } from "@/i18n/ui";
+import { getProjects, type Project } from "@/lib/projects";
+
+export async function getStaticPaths() {
+  const paths = [];
+  for (const lang of locales) {
+    const projects = await getProjects(lang);
+    for (const [i, project] of projects.entries()) {
+      paths.push({
+        params: { lang, slug: project.id },
+        props: { lang, project, prev: projects[i - 1], next: projects[i + 1] },
+      });
+    }
+  }
+  return paths;
+}
+
+interface Props {
+  lang: Locale;
+  project: Project;
+  prev?: Project;
+  next?: Project;
+}
+
+const { lang, project, prev, next } = Astro.props;
+const t = useTranslations(lang);
+const { meta } = project;
+const { Content } = await render(project.entry);
+const projectHref = (p: Project) => localePath(lang, `projects/${p.id}/`);
+const links = (["repo", "demo", "docs"] as const).flatMap((key) => {
+  const href = meta.links?.[key];
+  return href ? [{ href, label: t(`link.${key}`) }] : [];
+});
+const facts = [
+  { label: t("project.year"), value: String(meta.date.getFullYear()) },
+  {
+    label: t("project.area"),
+    value: meta.areas.map((a) => t(`area.${a}`)).join(", "),
+  },
+  {
+    label: t("project.context"),
+    value: [t(`context.${meta.context}`), meta.course]
+      .filter(Boolean)
+      .join(" · "),
+  },
+  { label: t("project.tech"), value: meta.tech.join(", ") },
+].filter((f) => f.value);
+---
+
+<BaseLayout lang={lang} title={project.title} description={project.summary}>
+  <article>
+    <header class="grid-page gap-y-6 pt-8">
+      <a
+        href={localePath(lang, "projects/")}
+        class="col-span-full text-meta font-medium uppercase no-underline hover:text-signal-ink hover:underline"
+      >
+        ← {t("project.back")}
+      </a>
+      <h1 class="stretch-h1 col-span-full text-h1 lg:col-span-10">
+        {project.title}
+      </h1>
+      <p class="col-span-full text-h3 lg:col-span-8">{project.summary}</p>
+    </header>
+
+    <div class="grid-page mt-10">
+      <dl class="col-span-full grid grid-cols-2 gap-x-6 gap-y-4 border-y border-ink py-4 text-meta sm:grid-cols-4 lg:grid-cols-5">
+        {facts.map((f) => (
+          <div>
+            <dt class="text-muted">{f.label}</dt>
+            <dd class="font-medium">{f.value}</dd>
+          </div>
+        ))}
+        {links.length > 0 && (
+          <div>
+            <dt class="text-muted">{t("project.links")}</dt>
+            <dd class="flex flex-wrap gap-x-3 font-medium">
+              {links.map((l) => (
+                <a
+                  href={l.href}
+                  class="underline hover:text-signal-ink"
+                  rel="noopener"
+                >
+                  {l.label} ↗
+                </a>
+              ))}
+            </dd>
+          </div>
+        )}
+      </dl>
+    </div>
+
+    <div class="grid-page mt-8">
+      <Picture
+        src={meta.cover}
+        alt={project.coverAlt}
+        formats={["avif", "webp"]}
+        widths={[640, 960, 1280]}
+        sizes="(min-width: 1440px) 1328px, calc(100vw - 2 * clamp(1rem, 4vw, 3.5rem))"
+        loading="eager"
+        fetchpriority="high"
+        pictureAttributes={{ class: "col-span-full block" }}
+        class="aspect-[3/2] w-full bg-rule-soft object-cover"
+      />
+    </div>
+
+    <div class="grid-page mt-12">
+      <div class="prose-body col-span-full lg:col-span-8 lg:col-start-3">
+        <Content />
+      </div>
+    </div>
+
+    {(prev || next) && (
+      <nav
+        aria-label={t("project.back")}
+        class="grid-page mt-section border-t-2 border-ink pt-6"
+      >
+        <div class="col-span-2 sm:col-span-3 lg:col-span-6">
+          {prev && (
+            <a href={projectHref(prev)} class="group no-underline">
+              <span class="block text-meta text-muted">
+                ← {t("project.prev")}
+              </span>
+              <span class="stretch-h2 text-h3 group-hover:text-signal-ink group-hover:underline">
+                {prev.title}
+              </span>
+            </a>
+          )}
+        </div>
+        <div class="col-span-2 text-right sm:col-span-3 lg:col-span-6">
+          {next && (
+            <a href={projectHref(next)} class="group no-underline">
+              <span class="block text-meta text-muted">
+                {t("project.next")} →
+              </span>
+              <span class="stretch-h2 text-h3 group-hover:text-signal-ink group-hover:underline">
+                {next.title}
+              </span>
+            </a>
+          )}
+        </div>
+      </nav>
+    )}
+  </article>
+</BaseLayout>

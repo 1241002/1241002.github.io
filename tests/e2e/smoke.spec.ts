@@ -6,6 +6,16 @@ const pages = [
   { path: "en/", lang: "en", switchTo: "pt/" },
   { path: "pt/projects/", lang: "pt", switchTo: "en/projects/" },
   { path: "en/projects/", lang: "en", switchTo: "pt/projects/" },
+  {
+    path: "pt/projects/dragster-fnr-2026/",
+    lang: "pt",
+    switchTo: "en/projects/dragster-fnr-2026/",
+  },
+  {
+    path: "en/projects/trackbotgp-open-robotica-2026/",
+    lang: "en",
+    switchTo: "pt/projects/trackbotgp-open-robotica-2026/",
+  },
 ];
 
 for (const p of pages) {
@@ -43,7 +53,13 @@ test("unknown URL shows the bilingual 404", async ({ page }) => {
 
 test("no internal link is broken", async ({ page, request, baseURL }) => {
   const origin = new URL(baseURL!).origin;
-  const queue = [new URL("pt/", baseURL).href, new URL("en/", baseURL).href];
+  // Project pages are seeded until the archive links to them (slice 4).
+  const queue = [
+    "pt/",
+    "en/",
+    "pt/projects/trackbotgp-open-robotica-2026/",
+    "en/projects/trackbotgp-open-robotica-2026/",
+  ].map((p) => new URL(p, baseURL).href);
   const seen = new Set<string>();
   const broken: string[] = [];
 
@@ -77,7 +93,7 @@ test("no internal link is broken", async ({ page, request, baseURL }) => {
 test("no horizontal overflow and screenshots for review", async ({
   page,
 }, testInfo) => {
-  for (const p of ["pt/", "en/projects/"]) {
+  for (const p of ["pt/", "en/projects/", "pt/projects/dragster-fnr-2026/"]) {
     await page.goto(p);
     // Measure the settled layout: the fallback face has no condensed width.
     const overflow = await page.evaluate(async () => {
@@ -88,10 +104,37 @@ test("no horizontal overflow and screenshots for review", async ({
       );
     });
     expect(overflow, `${p} overflows horizontally`).toBeLessThanOrEqual(0);
+    // Load lazy images so the capture shows what a visitor scrolls into.
+    await page.evaluate(async () => {
+      for (const img of document.querySelectorAll("img")) {
+        img.loading = "eager";
+      }
+      await Promise.all(
+        [...document.images].map((img) =>
+          img.complete ? null : img.decode().catch(() => null),
+        ),
+      );
+    });
     const name = `${p.replaceAll("/", "_")}${testInfo.project.name}.png`;
     await page.screenshot({
       path: `.impeccable/review/${name}`,
       fullPage: true,
     });
   }
+});
+
+test("project page serves an optimised cover and an alt text", async ({
+  page,
+}) => {
+  await page.goto("pt/projects/dragster-fnr-2026/");
+  const cover = page.locator("article picture").first();
+  await expect(cover.locator('source[type="image/avif"]')).toHaveCount(1);
+  await expect(cover.locator('source[type="image/webp"]')).toHaveCount(1);
+  await expect(cover.locator("img")).toHaveAttribute("alt", /.+/);
+  // The cover spans the grid, not the image's intrinsic size.
+  const coverBox = await cover.locator("img").boundingBox();
+  const mainBox = await page.locator("main").boundingBox();
+  expect(coverBox!.width).toBeGreaterThan(mainBox!.width * 0.85);
+  const bodyImages = page.locator(".prose-body img");
+  await expect(bodyImages.first()).toHaveAttribute("alt", /.+/);
 });
