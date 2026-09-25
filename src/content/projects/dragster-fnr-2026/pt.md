@@ -7,7 +7,7 @@ context: isep
 tech: [C, Teensy 4.0, PCB, Sensores]
 cover: ./cover.jpg
 coverAlt: A equipa de costas, com as t-shirts dos patrocinadores, a olhar para o ecrã do RoboCup Portugal Open 2026 em Barcelos.
-featured: true
+featured: 1
 ---
 
 Campeonato Nacional de Robótica, categoria Dragster, pela equipa **Tropa do Massas** (sim, o nome é mesmo esse). A prova foi no 26.º Festival Nacional de Robótica — RoboCup Portugal Open, em Barcelos.
@@ -23,6 +23,14 @@ Campeonato Nacional de Robótica, categoria Dragster, pela equipa **Tropa do Mas
 Foram três dias de competição. Houve avarias, houve reparações de emergência entre rondas, e chegámos às finais: **8.º lugar em 16 equipas** e o **Prémio Chita**.
 
 ![A equipa Tropa do Massas no pavilhão do festival, com o ecrã do RoboCup Portugal Open ao fundo.](./team.jpg)
+
+## Por dentro
+
+A PCB de controlo, desenhada por mim: o Teensy 4.0 ao centro, dois drivers de motor Pololu TB9051FTG, os condensadores de alimentação e os conectores dos sensores.
+
+![Layout da PCB de controlo do Dragster: Teensy 4.0 ao centro, dois drivers de motor Pololu TB9051FTG, condensadores e conectores.](./pcb.png)
+
+![Certificado do Prémio Chita, categoria Dragster, em nome de Alexandre Costa, equipa Tropa do Massas, no RoboCup Portugal Open 2026.](./award.jpg)
 
 ## A seguir
 

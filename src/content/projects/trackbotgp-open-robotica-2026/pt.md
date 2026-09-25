@@ -7,7 +7,7 @@ context: isep
 tech: [C, Eletrónica, Modelação 3D]
 cover: ./cover.jpg
 coverAlt: Quatro membros da equipa com o robô na mão, em frente ao ecrã com a tabela de resultados da TrackBotGP.
-featured: true
+featured: 2
 ---
 
 A TrackBotGP do Open Robótica ISEP 2026 é uma corrida de robôs autónomos em três pistas — Monza, Portimão e Suzuka. Entrámos como **Tropa do Massas**, uma equipa de quatro, com o **Robô-GOAT**.

@@ -93,6 +93,7 @@ test("no horizontal overflow and screenshots for review", async ({
     "pt/projects/",
     "en/projects/",
     "pt/projects/dragster-fnr-2026/",
+    "pt/projects/bip-self-cleaning-textiles-2026/",
   ]) {
     await page.goto(p);
     // Let the name's entrance finish so the capture shows the settled page.
@@ -109,16 +110,17 @@ test("no horizontal overflow and screenshots for review", async ({
     });
     expect(overflow, `${p} overflows horizontally`).toBeLessThanOrEqual(0);
     // Load lazy images so the capture shows what a visitor scrolls into.
-    await page.evaluate(async () => {
-      for (const img of document.querySelectorAll("img")) {
-        img.loading = "eager";
-      }
-      await Promise.all(
-        [...document.images].map((img) =>
-          img.complete ? null : img.decode().catch(() => null),
-        ),
-      );
+    await page.evaluate(() => {
+      for (const img of document.images) img.loading = "eager";
     });
+    // `complete` is also true for a lazy image that never started loading.
+    await page.waitForFunction(() =>
+      [...document.images].every((img) => img.complete && img.naturalWidth > 0),
+    );
+    // Astro sets decoding="async"; a full-page capture can beat the decode.
+    await page.evaluate(() =>
+      Promise.all([...document.images].map((img) => img.decode())),
+    );
     const name = `${p.replaceAll("/", "_")}${testInfo.project.name}.png`;
     await page.screenshot({
       path: `.impeccable/review/${name}`,
@@ -149,27 +151,26 @@ test.describe("archive", () => {
   }) => {
     await page.goto("pt/projects/");
     const rows = page.locator(".project-row");
-    await expect(rows).toHaveCount(2);
-    await expect(rows.first()).toContainText("Robô Dragster");
-    await expect(page.locator("[data-count]")).toHaveText("(2)");
+    await expect(rows).toHaveCount(5);
+    await expect(rows.first()).toContainText("Têxteis autolimpantes");
+    await expect(page.locator("[data-count]")).toHaveText("(5)");
 
     const filters = page.locator("[data-filters]");
     await expect(filters).toBeVisible();
-    const software = filters.getByRole("button", { name: "Software" });
-    await expect(software).toHaveAttribute("aria-disabled", "true");
-    await software.click({ force: true }); // disabled: must be a no-op
-    await expect(software).toHaveAttribute("aria-pressed", "false");
-    await expect(rows.filter({ visible: true })).toHaveCount(2);
-
     const hardware = filters.getByRole("button", { name: "Hardware" });
     await hardware.click();
     await expect(hardware).toHaveAttribute("aria-pressed", "true");
     await expect(rows.filter({ visible: true })).toHaveCount(2);
-    await expect(
-      filters.getByRole("button", { name: "Pessoal" }),
-    ).toHaveAttribute("aria-disabled", "true");
+    await expect(page.locator("[data-count]")).toHaveText("(2)");
 
-    await rows.first().getByRole("link").click();
+    // No hardware project is personal: the chip is disabled and a no-op.
+    const personal = filters.getByRole("button", { name: "Pessoal" });
+    await expect(personal).toHaveAttribute("aria-disabled", "true");
+    await personal.click({ force: true });
+    await expect(personal).toHaveAttribute("aria-pressed", "false");
+    await expect(rows.filter({ visible: true })).toHaveCount(2);
+
+    await rows.filter({ visible: true }).first().getByRole("link").click();
     await expect(page).toHaveURL(/projects\/dragster-fnr-2026\/$/);
   });
 });
@@ -180,7 +181,7 @@ test.describe("archive without JavaScript", () => {
     page,
   }) => {
     await page.goto("en/projects/");
-    await expect(page.locator(".project-row")).toHaveCount(2);
+    await expect(page.locator(".project-row")).toHaveCount(5);
     await expect(page.locator(".project-row").first()).toBeVisible();
     await expect(page.locator("[data-filters]")).toBeHidden();
   });
@@ -212,7 +213,7 @@ test.describe("recruiter home", () => {
       await expect(page.locator("main h2")).toHaveCount(4);
 
       const cards = page.locator("a[data-featured]");
-      await expect(cards).toHaveCount(2);
+      await expect(cards).toHaveCount(4);
       for (const href of await cards.evaluateAll((els) =>
         els.map((el) => (el as HTMLAnchorElement).href),
       )) {
@@ -238,7 +239,7 @@ test.describe("home without JavaScript", () => {
   test.use({ javaScriptEnabled: false });
   test("shows every section", async ({ page }) => {
     await page.goto("pt/");
-    await expect(page.locator("a[data-featured]")).toHaveCount(2);
+    await expect(page.locator("a[data-featured]")).toHaveCount(4);
     await expect(page.locator("[data-contact]")).toBeVisible();
     await expect(page.locator("a[data-cv]")).toBeVisible();
   });

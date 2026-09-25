@@ -19,7 +19,7 @@ Portfólio bilingue (PT/EN): home para recrutadores + arquivo completo de projet
 ## Decisões principais (detalhe em DECISOES.md)
 
 - D1 Conteúdo: uma pasta por projeto `src/content/projects/<slug>/{pt.md,en.md,cover.jpg}`; `pt.md` canónico, `en.md` só `title/summary/coverAlt` + corpo. Junção `getProjects(lang)` falha o build se faltar EN.
-- D2 Schema: title, summary (≤160), date, areas[software|hardware|robotics], context[isep|personal], course?, tech[], cover, coverAlt, featured, links{repo,demo,docs}?, draft.
+- D2 Schema: title, summary (≤160), date, areas[software|hardware|robotics], context[isep|personal], course?, tech[], cover, coverAlt, featured (posição na home, 1–4), links{repo,demo,docs}?, draft.
 - D3 URLs: prefixo nas duas línguas (`/pt/projects/<slug>/`), `trailingSlash: "always"`, `/` redireciona.
 - D4 Base: repo `<user>.github.io` sem `base`; todos os links via helpers.
 - D5 Filtro: HTML estático + script vanilla (<40 linhas), `aria-pressed`.

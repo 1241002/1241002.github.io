@@ -7,7 +7,13 @@ import { z } from "astro/zod";
 const base = "./src/content/projects";
 const slugFromPath = ({ entry }: { entry: string }) => entry.split("/")[0]!;
 
-export const areas = ["software", "hardware", "robotics"] as const;
+export const areas = [
+  "software",
+  "hardware",
+  "robotics",
+  "research",
+  "communication",
+] as const;
 export const contexts = ["isep", "personal"] as const;
 
 const projects = defineCollection({
@@ -23,7 +29,8 @@ const projects = defineCollection({
       tech: z.array(z.string()).default([]),
       cover: image(),
       coverAlt: z.string().min(1),
-      featured: z.boolean().default(false),
+      /** Position on the home page (1 = first); omit to keep off the home. */
+      featured: z.number().int().min(1).optional(),
       links: z
         .object({
           repo: z.url().optional(),

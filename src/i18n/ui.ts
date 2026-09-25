@@ -60,6 +60,8 @@ const ui = {
     "area.software": "Software",
     "area.hardware": "Hardware",
     "area.robotics": "Robótica",
+    "area.research": "Investigação",
+    "area.communication": "Comunicação",
     "context.isep": "ISEP",
     "context.personal": "Pessoal",
     "archive.lead":
@@ -124,6 +126,8 @@ const ui = {
     "area.software": "Software",
     "area.hardware": "Hardware",
     "area.robotics": "Robotics",
+    "area.research": "Research",
+    "area.communication": "Communication",
     "context.isep": "ISEP",
     "context.personal": "Personal",
     "archive.lead":

@@ -18,6 +18,14 @@ Three days of racing. Things broke, we did emergency repairs between rounds, and
 
 ![Team Tropa do Massas in the festival hall, with the RoboCup Portugal Open screen in the background.](./team.jpg)
 
+## Inside
+
+The control PCB, which I designed: the Teensy 4.0 in the middle, two Pololu TB9051FTG motor drivers, the power capacitors and the sensor connectors.
+
+![Layout of the Dragster control PCB: Teensy 4.0 in the middle, two Pololu TB9051FTG motor drivers, capacitors and connectors.](./pcb.png)
+
+![Cheetah Award certificate, Dragster category, for Alexandre Costa, team Tropa do Massas, at RoboCup Portugal Open 2026.](./award.jpg)
+
 ## Next
 
 I'm already working on version 2 for the 2027 National Robotics Festival — this time the PCB doubles as the chassis.

@@ -29,7 +29,10 @@ const { lang } = Astro.params;
 if (!isLocale(lang)) throw new Error(`Unknown locale: ${lang}`);
 const t = useTranslations(lang);
 const projects = await getProjects(lang);
-const featured = projects.filter((p) => p.meta.featured).slice(0, MAX_FEATURED);
+const featured = projects
+  .filter((p) => p.meta.featured !== undefined)
+  .sort((a, b) => a.meta.featured! - b.meta.featured!)
+  .slice(0, MAX_FEATURED);
 const cvHref = assetPath("cv/cv-alexandre-costa.pdf");
 const facts = [
   {
