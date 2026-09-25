@@ -151,24 +151,24 @@ test.describe("archive", () => {
   }) => {
     await page.goto("pt/projects/");
     const rows = page.locator(".project-row");
-    await expect(rows).toHaveCount(5);
+    await expect(rows).toHaveCount(7);
     await expect(rows.first()).toContainText("Têxteis autolimpantes");
-    await expect(page.locator("[data-count]")).toHaveText("(5)");
+    await expect(page.locator("[data-count]")).toHaveText("(7)");
 
     const filters = page.locator("[data-filters]");
     await expect(filters).toBeVisible();
     const hardware = filters.getByRole("button", { name: "Hardware" });
     await hardware.click();
     await expect(hardware).toHaveAttribute("aria-pressed", "true");
-    await expect(rows.filter({ visible: true })).toHaveCount(2);
-    await expect(page.locator("[data-count]")).toHaveText("(2)");
+    await expect(rows.filter({ visible: true })).toHaveCount(4);
+    await expect(page.locator("[data-count]")).toHaveText("(4)");
 
     // No hardware project is personal: the chip is disabled and a no-op.
     const personal = filters.getByRole("button", { name: "Pessoal" });
     await expect(personal).toHaveAttribute("aria-disabled", "true");
     await personal.click({ force: true });
     await expect(personal).toHaveAttribute("aria-pressed", "false");
-    await expect(rows.filter({ visible: true })).toHaveCount(2);
+    await expect(rows.filter({ visible: true })).toHaveCount(4);
 
     await rows.filter({ visible: true }).first().getByRole("link").click();
     await expect(page).toHaveURL(/projects\/dragster-fnr-2026\/$/);
@@ -181,7 +181,7 @@ test.describe("archive without JavaScript", () => {
     page,
   }) => {
     await page.goto("en/projects/");
-    await expect(page.locator(".project-row")).toHaveCount(5);
+    await expect(page.locator(".project-row")).toHaveCount(7);
     await expect(page.locator(".project-row").first()).toBeVisible();
     await expect(page.locator("[data-filters]")).toBeHidden();
   });

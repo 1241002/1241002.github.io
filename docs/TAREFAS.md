@@ -5,7 +5,8 @@
 - [ ] Fatia 7 — conteúdo completo + polimento
   - [x] Dragster: PCB + certificado Prémio Chita; BIP (paper, só imagens, sem download); Meireles Connect (capa tipográfica, link notícia ISEP); Space Benders F1 in Schools
   - [x] Áreas novas: Investigação, Comunicação; `featured` passa a posição na home (1–4)
-  - [ ] Peltier e Paiva MILP (à espera de fotos)
+  - [x] Mini-frigorífico Peltier (LENG1) e Drone dirigível (LENG2, colegas aceitam aparecer)
+  - [ ] Paiva MILP (à espera de material: modelo, gráficos ou mapa)
   - [ ] Meireles: diagramas/mockups se aparecerem; foto grande do robô Dragster (só há miniatura 160px)
   - [ ] Polimento: axe sem erros críticos, imagens ≤1 MB
 
