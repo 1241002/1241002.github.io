@@ -7,8 +7,7 @@ context: isep
 course: Erasmus+ BIP Engineering Visions 2026
 tech: [Revisão de literatura, Escrita científica (IEEE), Inglês]
 cover: ./cover.jpg
-coverAlt: Topo da primeira página do artigo "Self-cleaning textiles to reduce microplastics", com o título e os seis autores.
-featured: 3
+coverAlt: Excerto da segunda página do artigo, com a metodologia e um diagrama do revestimento de tecido com partículas de TiO₂.
 ---
 
 O Blended Intensive Programme **Engineering Visions 2026** da htw saar (Saarbrücken, Alemanha) juntou estudantes de toda a Europa para pensar em formas de combater microplásticos e PFAS: uma parte online e duas semanas presenciais. A minha equipa tinha seis estudantes de seis instituições — mecatrónica, química, gestão, engenharia mecânica, informática e eu, de engenharia de sistemas — e trabalhou sempre em inglês.
@@ -30,6 +29,6 @@ A conclusão: a diferença decisiva está na fibra, não no acabamento. E fomos 
 
 Brainwriting para gerar ideias, agrupamento por temas, mapa mental para afunilar o âmbito e feedback dos outros participantes até chegar à pergunta final. Depois, pesquisa de artigos com revisão por pares e escrita a doze mãos. No fim, apresentámos os resultados oralmente, em grupo.
 
-![Primeira página do artigo: título, autores, resumo e introdução.](./page-1.jpg)
+![Primeira página do artigo, a partir do resumo: resumo, palavras-chave e introdução.](./page-1.jpg)
 
 ![Segunda página do artigo: metodologia, libertação de microfibras e mecanismos de autolimpeza.](./page-2.jpg)

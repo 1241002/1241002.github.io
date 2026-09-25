@@ -6,7 +6,8 @@
   - [x] Dragster: PCB + certificado Prémio Chita; BIP (paper, só imagens, sem download); Meireles Connect (capa tipográfica, link notícia ISEP); Space Benders F1 in Schools
   - [x] Áreas novas: Investigação, Comunicação; `featured` passa a posição na home (1–4)
   - [x] Mini-frigorífico Peltier (LENG1) e Drone dirigível (LENG2, colegas aceitam aparecer)
-  - [ ] Paiva MILP (à espera de material: modelo, gráficos ou mapa)
+  - [x] Paiva MILP fica de fora (decisão do utilizador)
+  - [x] Destaques só com boas fotos (Dragster, TrackBotGP, Peltier, Space Benders); paper sem o bloco de autores/emails
   - [ ] Meireles: diagramas/mockups se aparecerem; foto grande do robô Dragster (só há miniatura 160px)
   - [ ] Polimento: axe sem erros críticos, imagens ≤1 MB
 

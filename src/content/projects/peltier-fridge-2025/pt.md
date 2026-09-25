@@ -7,6 +7,7 @@ context: isep
 course: LENG1
 tech: [Célula de Peltier, Eletrónica, Sensores, Controlo liga/desliga]
 cover: ./cover.jpg
+featured: 3
 coverAlt: O mini-frigorífico, uma caixa de esferovite com a palavra FRIGO pintada, com o dissipador e a ventoinha montados em cima, numa secretária.
 ---
 

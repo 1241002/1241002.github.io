@@ -1,7 +1,7 @@
 ---
 title: Self-cleaning textiles against microplastics — Erasmus+ BIP
 summary: An IEEE-format review paper co-authored by six students from six European institutions at the htw saar Erasmus+ BIP.
-coverAlt: Top of the first page of the paper "Self-cleaning textiles to reduce microplastics", with the title and the six authors.
+coverAlt: Excerpt from the second page of the paper, with the methodology and a diagram of coating fabric with TiO₂ particles.
 ---
 
 htw saar's Blended Intensive Programme **Engineering Visions 2026** (Saarbrücken, Germany) brought together students from across Europe to work on ways to fight microplastics and PFAS: an online part plus two weeks on site. My team had six students from six institutions — mechatronics, chemistry, management, mechanical engineering, computer science and me, from systems engineering — and worked entirely in English.
@@ -23,6 +23,6 @@ The conclusion: the decisive difference lies in the fibre, not the finish. And w
 
 Brainwriting to generate ideas, grouping by theme, a mind map to narrow the scope and feedback from other participants until we reached the final question. Then a search for peer-reviewed papers and writing with twelve hands. At the end we presented the results orally, as a group.
 
-![First page of the paper: title, authors, abstract and introduction.](./page-1.jpg)
+![First page of the paper, from the abstract on: abstract, keywords and introduction.](./page-1.jpg)
 
 ![Second page of the paper: methodology, microfibre release and self-cleaning mechanisms.](./page-2.jpg)

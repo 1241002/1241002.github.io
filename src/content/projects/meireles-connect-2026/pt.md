@@ -8,7 +8,6 @@ course: LSIS1
 tech: [PHP, MySQL, Web]
 cover: ./cover.png
 coverAlt: Capa tipográfica com o nome Meireles Connect em letras pretas condensadas e uma faixa vermelha em baixo.
-featured: 4
 links:
   docs: https://www.isep.ipp.pt/New/ViewNew/7656
 ---
